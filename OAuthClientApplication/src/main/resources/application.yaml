@@ -1,0 +1,63 @@
+server:
+  port: 8080
+  session:
+    cookie:
+      name: UISESSION
+spring:
+  thymeleaf:
+    cache: false
+  security:
+    oauth2:
+      client:
+        registration:
+          spring:
+            client-name: Auth Server
+            client-id: abcd
+            client-secret: qwerty
+            redirect-uri: http://localhost:${server.port}/login/oauth2/code/
+            scope: user_info
+            authorization-grant-type: authorization_code
+            client-authentication-method: basic
+          github:
+            client-name: GitHub
+            client-id: <clientId>
+            client-secret: <clientSecret>
+            redirect-uri: http://localhost:${server.port}/login/oauth2/code/
+            scope: user
+            authorization-grant-type: authorization_code
+            client-authentication-method: post
+          google:
+            client-name: Google
+            client-id: <clientId>
+            client-secret: <clientSecret>
+            redirect-uri: http://localhost:${server.port}/login/oauth2/code/
+            scope: profile,openid
+            authorization-grant-type: authorization_code
+            client-authentication-method: post
+        provider:
+          spring:
+            token-uri: http://localhost:8082/auth/oauth/token
+            authorization-uri: http://localhost:8082/auth/oauth/authorize
+            user-info-uri: http://localhost:8082/auth/user/me
+            userNameAttribute: name
+          github:
+            token-uri: https://github.com/login/oauth/access_token
+            authorization-uri: https://github.com/login/oauth/authorize
+            user-info-uri: https://api.github.com/user
+            userNameAttribute: login
+          google:
+            token-uri: https://oauth2.googleapis.com/token
+            authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
+            user-info-uri: https://openidconnect.googleapis.com/v1/userinfo
+            jwk-set-uri: https://www.googleapis.com/oauth2/v3/certs
+            userNameAttribute: name
+zuul:
+  routes:
+    me:
+      path: /api/proxy/**
+      url: http://localhost:8081/
+      sensitiveHeaders: Cookie,Set-Cookie
+proxy:
+  auth:
+    routes:
+      me: oauth2

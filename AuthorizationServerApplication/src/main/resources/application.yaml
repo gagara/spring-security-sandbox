@@ -1,0 +1,12 @@
+server:
+  port: 8082
+  servlet:
+    context-path: /auth
+user:
+  oauth:
+    clientId: abcd
+    clientSecret: qwerty
+    redirectUris: http://localhost:8080/login/oauth2/code/, http://localhost:8090/login/oauth2/code/, http://localhost:8083/login
+    user:
+      username: viacheslav
+      password: pwd

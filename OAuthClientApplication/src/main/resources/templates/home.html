@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Home Page (secured)</title>
+</head>
+<body>
+	<h1>
+		Welcome, <span th:text="${name}"></span>
+	</h1>
+	<div th:if="${access_token}">
+		<h2>Access token:</h2>
+		<span th:text="${access_token}"></span>
+	</div>
+	<div th:if="${id_token}">
+		<h2>ID token:</h2>
+		<span th:text="${id_token}"></span>
+	</div>
+</body>
+</html>

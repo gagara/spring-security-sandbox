@@ -1,0 +1,21 @@
+server:
+  port: 8083
+security:
+  oauth2:
+    client:
+      clientId: abcd
+      clientSecret: qwerty
+      accessTokenUri: http://localhost:8082/auth/oauth/token
+      userAuthorizationUri: http://localhost:8082/auth/oauth/authorize
+    resource:
+      userInfoUri: http://localhost:8082/auth/user/me
+zuul:
+  routes:
+    me:
+      path: /api/proxy/**
+      url: http://localhost:8081/
+      sensitiveHeaders: Cookie,Set-Cookie
+proxy:
+  auth:
+    routes:
+      me: oauth2
