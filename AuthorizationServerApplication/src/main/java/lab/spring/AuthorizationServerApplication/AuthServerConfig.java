@@ -2,8 +2,10 @@ package lab.spring.AuthorizationServerApplication;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -22,15 +24,17 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
 	@Value("${user.oauth.redirectUris}")
 	private List<String> redirectUris;
 
-	private final PasswordEncoder passwordEncoder;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
-	public AuthServerConfig(PasswordEncoder passwordEncoder) {
-		this.passwordEncoder = passwordEncoder;
-	}
+	@Autowired
+	private AuthenticationManager authenticationManager;
 
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-		endpoints.accessTokenConverter(new CheckTokenAccessTokenConverter());
+		endpoints
+			.accessTokenConverter(new CheckTokenAccessTokenConverter())
+			.authenticationManager(authenticationManager);
 	}
 
 	@Override
@@ -46,7 +50,7 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
 			.inMemory()
 			.withClient(clientId)
 			.secret(passwordEncoder.encode(clientSecret))
-			.authorizedGrantTypes("authorization_code")
+			.authorizedGrantTypes("authorization_code", "password", "client_credentials", "implicit")
 			.scopes("user_info")
 			.autoApprove(true)
 			.redirectUris(redirectUris.toArray(new String[0]));
