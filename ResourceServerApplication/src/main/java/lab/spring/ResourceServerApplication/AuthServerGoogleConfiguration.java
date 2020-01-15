@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.web.configurers.oauth2.ser
 
 @Configuration
 @Profile("google")
-public class AuthServerGoogleConfiguration extends WebSecurityConfigurerAdapter {
+public class AuthServerGoogleConfiguration extends CommonWebSecurityConfigurerAdapter {
 
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
