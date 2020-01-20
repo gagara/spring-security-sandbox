@@ -6,6 +6,7 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
+import org.springframework.security.oauth2.core.OAuth2RefreshToken;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.security.oauth2.core.oidc.user.OidcUser;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -20,6 +21,19 @@ public class SecurityUtils {
 					((OAuth2AuthenticationToken) auth).getAuthorizedClientRegistrationId(), auth.getName());
 			if (authorizedClient != null) {
 				return authorizedClient.getAccessToken();
+			}
+		}
+		return null;
+	}
+
+	public static OAuth2RefreshToken getRefreshToken(OAuth2AuthorizedClientService authorizedClientService) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		if (auth != null) {
+			OAuth2AuthorizedClient authorizedClient = authorizedClientService.loadAuthorizedClient(
+					((OAuth2AuthenticationToken) auth).getAuthorizedClientRegistrationId(), auth.getName());
+			if (authorizedClient != null) {
+				return authorizedClient.getRefreshToken();
 			}
 		}
 		return null;

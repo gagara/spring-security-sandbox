@@ -50,7 +50,7 @@ public class AuthServerConfig extends AuthorizationServerConfigurerAdapter {
 			.inMemory()
 			.withClient(clientId)
 			.secret(passwordEncoder.encode(clientSecret))
-			.authorizedGrantTypes("authorization_code", "password", "client_credentials", "implicit")
+			.authorizedGrantTypes("authorization_code", "password", "client_credentials", "implicit", "refresh_token")
 			.scopes("user_info")
 			.autoApprove(true)
 			.redirectUris(redirectUris.toArray(new String[0]));

@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
+import org.springframework.security.oauth2.core.OAuth2RefreshToken;
 import org.springframework.security.oauth2.core.oidc.OidcIdToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,6 +38,12 @@ public class WebController {
 		OAuth2AccessToken accessToken = SecurityUtils.getAccessToken(authorizedClientService);
 		if (accessToken != null) {
 			model.addAttribute("access_token", mapper.writeValueAsString(accessToken));
+
+		}
+
+		OAuth2RefreshToken refreshToken = SecurityUtils.getRefreshToken(authorizedClientService);
+		if (refreshToken != null) {
+			model.addAttribute("refresh_token", mapper.writeValueAsString(refreshToken));
 
 		}
 

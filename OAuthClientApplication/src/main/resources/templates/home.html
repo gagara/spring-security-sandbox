@@ -12,6 +12,10 @@
 		<h2>Access token:</h2>
 		<span th:text="${access_token}"></span>
 	</div>
+	<div th:if="${refresh_token}">
+		<h2>Refresh token:</h2>
+		<span th:text="${refresh_token}"></span>
+	</div>
 	<div th:if="${id_token}">
 		<h2>ID token:</h2>
 		<span th:text="${id_token}"></span>
