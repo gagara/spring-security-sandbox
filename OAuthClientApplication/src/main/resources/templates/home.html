@@ -20,5 +20,12 @@
 		<h2>ID token:</h2>
 		<span th:text="${id_token}"></span>
 	</div>
+	<div>
+		<form action="#" th:action="@{/api/me}" method="post">
+			<p>
+				<input type="submit" value="Post request" />
+			</p>
+		</form>
+	</div>
 </body>
 </html>
