@@ -20,10 +20,18 @@
 		<h2>ID token:</h2>
 		<span th:text="${id_token}"></span>
 	</div>
+	<hr />
 	<div>
 		<form action="#" th:action="@{/api/me}" method="post">
 			<p>
-				<input type="submit" value="Post request" />
+				<input type="submit" value="Post request (CSRF)" />
+			</p>
+		</form>
+	</div>
+	<div>
+		<form action="http://localhost:8081/me" method="post">
+			<p>
+				<input type="submit" value="Post request (CORS)" />
 			</p>
 		</form>
 	</div>
